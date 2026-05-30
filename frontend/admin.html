@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <video autoplay muted loop playsinline id="bgVideo">
+    <source src="assets/stadium.mp4" type="video/mp4">
+  </video>
+
+  <div class="page">
+
+    <div class="topbar">
+      <div class="brand-title">
+        <img src="assets/logoo.png" class="topbar-logo" alt="Yugo Logo">
+        <h2>Football Points League — Admin</h2>
+      </div>
+
+      <button class="logout-btn" onclick="goHome()">Back to App</button>
+    </div>
+
+
+
+    <details class="admin-dropdown" open>
+      <summary>Players Management</summary>
+
+      <div class="dash-card full">
+        <div id="adminUsers"></div>
+      </div>
+    </details>
+
+    <div class="dash-card full">
+  <h3>Add New Match</h3>
+
+  <input type="text" id="newTeamA" placeholder="Team A">
+  <input type="text" id="newTeamB" placeholder="Team B">
+  <input type="text" id="newStage" placeholder="Stage e.g. Group Stage">
+  <input type="text" id="newVenue" placeholder="Venue">
+  <input type="datetime-local" id="newMatchTime">
+
+  <button onclick="addNewMatch()">
+    Add Match
+  </button>
+</div>
+
+    <details class="admin-dropdown">
+      <summary>Match Result Control</summary>
+
+      <div class="dash-card full">
+        <div id="adminMatches"></div>
+      </div>
+    </details>
+
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
