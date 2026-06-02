@@ -44,7 +44,7 @@
   "group": "Testing",
   "teamA": "Portugal",
   "teamB": "Argentina",
-  "matchTime": "2026-05-27T14:00:00+04:00",
+  "matchTime": "2026-06-03T14:00:00+04:00",
   "venue": "Dubai Test Stadium"
 },
 {
@@ -52,7 +52,7 @@
   "group": "Testing",
   "teamA": "DubaiA",
   "teamB": "DubaiB",
-  "matchTime": "2026-05-27T14:00:00+04:00",
+  "matchTime": "2026-06-03T14:00:00+04:00",
   "venue": "Dubai Test Stadium"
 },
 
@@ -61,7 +61,7 @@
   "group": "Testing",
   "teamA": "Dubai",
   "teamB": "Sharjah",
-  "matchTime": "2026-05-27T14:00:00+04:00",
+  "matchTime": "2026-06-03T14:00:00+04:00",
   "venue": "Dubai Test Stadium"
 }
 
