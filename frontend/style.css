@@ -1461,3 +1461,12 @@ button:hover::after {
   letter-spacing: 1px;
 
 }
+
+.forgot-password-note {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #ffb3b3;
+  text-align: center;
+  line-height: 1.5;
+  opacity: 0.9;
+}
