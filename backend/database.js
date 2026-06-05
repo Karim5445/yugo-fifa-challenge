@@ -82,3 +82,4 @@ addColumnIfMissing("matches", "settlement_message", "TEXT");
 });
 
 module.exports = db;
+
