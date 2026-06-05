@@ -7,7 +7,7 @@ const db = require("./database");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SECRET = "football_points_secret_key";
+const SECRET = process.env.JWT_SECRET || "football_points_secret_key";
 
 app.use(cors());
 app.use(express.json());
