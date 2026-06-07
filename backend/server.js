@@ -295,11 +295,12 @@ app.post("/api/admin/add-match", auth, adminOnly, (req, res) => {
     });
   }
 
-  const matchDate = new Date(matchTime);
+  // Admin enters match time in UAE time.
+// Convert UAE time to UTC before saving.
+const matchDate = new Date(`${matchTime}:00+04:00`);
 
-  const predictionOpen = new Date(matchDate.getTime() - 24 * 60 * 60 * 1000);
-  const predictionClose = new Date(matchDate.getTime() - 5 * 60 * 1000);
-
+const predictionOpen = new Date(matchDate.getTime() - 24 * 60 * 60 * 1000);
+const predictionClose = new Date(matchDate.getTime() - 5 * 60 * 1000);
   db.run(
     `
     INSERT INTO matches 

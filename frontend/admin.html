@@ -40,8 +40,15 @@
   <input type="text" id="newTeamB" placeholder="Team B">
   <input type="text" id="newStage" placeholder="Stage e.g. Group Stage">
   <input type="text" id="newVenue" placeholder="Venue">
-  <input type="datetime-local" id="newMatchTime">
+<input
+  type="datetime-local"
+  id="newMatchTime"
+  step="60"
+>
 
+<p class="small-text">
+  Match time is UAE time. If your picker shows 12-hour format, use PM for evening matches.
+</p>
   <button onclick="addNewMatch()">
     Add Match
   </button>
