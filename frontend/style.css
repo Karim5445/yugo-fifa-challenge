@@ -1499,3 +1499,47 @@ button:hover::after {
 .match-item p:nth-of-type(1) {
   font-weight: 600;
 }
+
+.hero-left {
+  min-width: 320px;
+}
+
+.points-rules-box {
+  flex: 1;
+  max-width: 720px;
+  margin: 0 30px;
+  padding: 18px 24px;
+  border-radius: 22px;
+  background: rgba(8, 15, 30, 0.42);
+  border: 1px solid rgba(255, 111, 145, 0.45);
+  box-shadow: 0 0 28px rgba(255, 111, 145, 0.14);
+  text-align: center;
+}
+
+.points-rules-box h3 {
+  margin: 0 0 10px;
+  color: #ffd166;
+  font-size: 22px;
+}
+
+.points-rules-box p {
+  margin: 5px 0;
+  color: #f8fafc;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.points-rules-box strong {
+  color: #4ade80;
+}
+
+@media (max-width: 900px) {
+  .points-rules-box {
+    margin: 10px 0;
+    max-width: 100%;
+  }
+
+  .hero-left {
+    min-width: auto;
+  }
+}
