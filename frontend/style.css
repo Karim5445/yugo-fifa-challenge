@@ -1517,20 +1517,36 @@ button:hover::after {
 }
 
 .points-rules-box h3 {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   color: #ffd166;
-  font-size: 22px;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .points-rules-box p {
-  margin: 5px 0;
+  margin: 6px 0;
   color: #f8fafc;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
 }
 
-.points-rules-box strong {
+.green-text {
   color: #4ade80;
+  font-weight: 700;
+}
+
+.red-text {
+  color: #ff4d6d;
+  font-weight: 700;
+}
+
+.yellow-text {
+  color: #ffd166;
+  font-weight: 700;
+}
+
+.points-rules-box strong {
+  font-weight: 700;
 }
 
 @media (max-width: 900px) {
