@@ -249,7 +249,7 @@ function closeUserProfile() {
               </div>
 
               <h2>#${index + 1}</h2>
-              <h3>${user.username}</h3>
+              <h3>${user.full_name || user.username}</h3>
               <p>${user.points} pts</p>
               <span>${getRank(user.points)}</span>
             </div>
@@ -305,7 +305,7 @@ function closeUserProfile() {
   class="tv-name clickable-user"
   onclick="openUserProfile('${user.username}')"
 >
-  ${user.username}
+  ${user.full_name || user.username}
 </div>
 
               <div class="tv-rank">
