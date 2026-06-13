@@ -244,11 +244,6 @@ hideAllDashboardSections();
       clearInterval(refreshInterval);
     }
 
-    refreshInterval = setInterval(() => {
-      refreshUserData();
-      loadLeaderboard();
-    }, 5000);
-
   } catch (error) {
     alert("Login failed. Please check server/IP connection.");
     console.log(error);
