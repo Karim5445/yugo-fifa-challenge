@@ -189,7 +189,7 @@ app.get("/api/me", auth, (req, res) => {
 
 app.get("/api/leaderboard", (req, res) => {
   db.all(
-    "SELECT full_name, points FROM users WHERE is_active = 1 ORDER BY points DESC LIMIT 15",
+    "SELECT full_name, username, points FROM users WHERE is_active = 1 ORDER BY points DESC",
     [],
     (err, rows) => {
       if (err) {

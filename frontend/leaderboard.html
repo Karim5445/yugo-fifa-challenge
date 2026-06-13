@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Top 15 Leaderboard</title>
+  <title>Live Leaderboard</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -258,7 +258,7 @@ function closeUserProfile() {
 
         let rankUpDetected = false;
 
-        data.slice(0, 15).forEach((user, index) => {
+        data.forEach((user, index) => {
           let badge = "⚽";
 
           if (index === 0) badge = "👑";
