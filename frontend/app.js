@@ -280,7 +280,7 @@ async function loadLeaderboard() {
           <span class="leader-badge">${badge}</span>
 
           <div class="leader-info">
-            <strong>#${index + 1} ${user.username}</strong>
+            <strong>#${index + 1} ${user.full_name}</strong>
             <small>${getRank(user.points)}</small>
           </div>
 
