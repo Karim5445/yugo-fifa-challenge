@@ -315,3 +315,33 @@ async function initAdmin() {
 }
 
 initAdmin();
+
+// Export all users as JSON for AJA League import
+async function exportUsersForAJA() {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`${API}/admin/users`, {
+    headers: { "Authorization": token }
+  });
+
+  const users = await res.json();
+
+  // Format for AJA import (exclude admin accounts)
+  const exportData = users
+    .filter(u => u.is_admin !== 1)
+    .map(u => ({
+      username: u.username,
+      fullName: u.full_name || u.username,
+      country: "UAE",
+      points: u.points
+    }));
+
+  const json = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "yugo-users-export.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}

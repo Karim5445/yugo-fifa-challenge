@@ -271,7 +271,7 @@ async function loadLeaderboard() {
       if (index === 2) badge = "🥉";
 
       box.innerHTML += `
-        <div class="leaderboard-item rank-${index + 1}">
+        <div class="leaderboard-item rank-${index + 1}" onclick="showUserHistory('${user.username}')" style="cursor:pointer" title="View ${user.full_name || user.username}'s bet history">
           <span class="leader-badge">${badge}</span>
 
           <div class="leader-info">
@@ -847,3 +847,94 @@ function showLeaderboardSection() {
   loadLeaderboard();
   section.scrollIntoView({ behavior: "smooth" });
 }
+
+
+// ─── USER HISTORY MODAL ──────────────────────────────────────────────────────
+
+async function showUserHistory(username) {
+  const token = localStorage.getItem("token");
+  const modal = document.getElementById("userHistoryModal");
+  const title = document.getElementById("userHistoryTitle");
+  const statBox = document.getElementById("userHistoryStats");
+  const listBox = document.getElementById("userHistoryList");
+
+  title.innerText = "Loading...";
+  statBox.innerHTML = "";
+  listBox.innerHTML = "<p>Loading history...</p>";
+  modal.classList.remove("hidden");
+
+  try {
+    const res = await fetch(`${API}/user-history/${encodeURIComponent(username)}`, {
+      headers: { "Authorization": token }
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      listBox.innerHTML = `<p>${data.message || "Could not load history."}</p>`;
+      return;
+    }
+
+    const { user, history } = data;
+    title.innerText = `${user.fullName || user.username}'s Bet History`;
+
+    // Stats summary
+    let wins = 0, losses = 0, draws = 0;
+    history.forEach(h => {
+      if (h.result === "DRAW") draws++;
+      else if (h.selected_team === h.result) wins++;
+      else losses++;
+    });
+    const settled = wins + losses + draws;
+    const rate = settled > 0 ? Math.round((wins / settled) * 100) : 0;
+
+    statBox.innerHTML = `
+      <div class="user-history-summary">
+        <span>🏆 ${wins} wins</span>
+        <span>❌ ${losses} losses</span>
+        <span>🤝 ${draws} draws</span>
+        <span>🎯 ${rate}% success</span>
+        <span>💰 ${user.points} pts</span>
+      </div>
+    `;
+
+    if (history.length === 0) {
+      listBox.innerHTML = "<p>No settled bets yet.</p>";
+      return;
+    }
+
+    listBox.innerHTML = history.map(item => {
+      let color = "#ef4444";
+      let label = "Lost";
+      if (item.result === "DRAW") { color = "#22c55e"; label = "Draw ✓"; }
+      else if (item.selected_team === item.result) { color = "#22c55e"; label = "Won ✓"; }
+
+      const matchDate = new Date(item.match_time).toLocaleDateString("en-GB", {
+        day: "2-digit", month: "short", year: "numeric", timeZone: "Asia/Dubai"
+      });
+
+      return `
+        <div class="match-item">
+          <h4>${item.team_a} vs ${item.team_b}</h4>
+          <p>Stage: ${item.stage}${item.group_name ? " - " + item.group_name : ""}</p>
+          <p>Date: ${matchDate}</p>
+          <p>Picked: <strong>${item.selected_team}</strong> · ${item.points_used} pts</p>
+          <p style="color:${color}; font-weight:bold;">${label} (Result: ${item.result})</p>
+        </div>
+      `;
+    }).join("");
+
+  } catch (err) {
+    listBox.innerHTML = "<p>Failed to load history.</p>";
+    console.log("User history error:", err);
+  }
+}
+
+function closeUserHistory() {
+  document.getElementById("userHistoryModal").classList.add("hidden");
+}
+
+// Close modal on backdrop click
+document.addEventListener("click", function(e) {
+  const modal = document.getElementById("userHistoryModal");
+  if (e.target === modal) closeUserHistory();
+});

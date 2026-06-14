@@ -178,7 +178,7 @@
 
   <p>✅ Correct Prediction = <strong class="green-text">Double Your Stake</strong></p>
 
-  <p>🤝 Draw Prediction = <strong class="yellow-text">Return Your Stake</strong></p>
+  <p>🤝 Draw Prediction = <strong class="yellow-text">1.5x Your Stake</strong></p>
 
   <p>❌ Wrong Prediction = <strong class="red-text">Lose Points Used</strong></p>
 
@@ -277,6 +277,18 @@
 </section>
 
   </div>
+  <!-- User History Modal -->
+  <div id="userHistoryModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="userHistoryTitle">Player History</h3>
+        <button class="modal-close" onclick="closeUserHistory()">✕</button>
+      </div>
+      <div id="userHistoryStats" class="user-history-stats"></div>
+      <div id="userHistoryList" class="user-history-list"></div>
+    </div>
+  </div>
+
   <audio id="predictSound" src="assets/sounds/prediction.mp3"></audio>
   <script src="app.js"></script>
 </body>
