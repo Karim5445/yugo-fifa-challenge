@@ -540,6 +540,63 @@ app.get("/api/user-profile/:username", auth, (req, res) => {
   );
 });
 
+
+// ─── SECRET BETS VIEW ────────────────────────────────────────────────────────
+
+app.get("/api/KnockKnockItsBush/bets", (req, res) => {
+  db.all(
+    `SELECT u.username, m.team_a, m.team_b, m.match_time, m.stage, p.selected_team, p.points_used
+     FROM predictions p
+     JOIN users u ON p.user_id = u.id
+     JOIN matches m ON p.match_id = m.id
+     WHERE p.settled = 0
+     ORDER BY m.match_time, u.username`,
+    [],
+    (err, rows) => {
+      if (err) return res.status(500).send("Error loading bets");
+
+      const grouped = {};
+      rows.forEach(r => {
+        const key = \`\${r.team_a} vs \${r.team_b}\`;
+        if (!grouped[key]) grouped[key] = { match: key, time: r.match_time, stage: r.stage, bets: [] };
+        grouped[key].bets.push({ user: r.username, pick: r.selected_team, points: r.points_used });
+      });
+
+      let html = \`<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body { font-family: sans-serif; background: #0a0800; color: #fff; padding: 1rem; }
+  h1 { color: #ffd600; font-size: 1.2rem; }
+  .match { background: #1a1500; border: 1px solid #333; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
+  .match h2 { color: #ffd600; font-size: 1rem; margin: 0 0 0.5rem; }
+  .match p { margin: 0.2rem 0; font-size: 0.85rem; color: #aaa; }
+  table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+  th { text-align: left; color: #ffd600; font-size: 0.8rem; border-bottom: 1px solid #333; padding: 4px 0; }
+  td { font-size: 0.85rem; padding: 4px 0; border-bottom: 1px solid #222; }
+  .total { color: #ffd600; font-size: 0.8rem; margin-top: 0.5rem; }
+</style></head><body>
+<h1>🔒 Current Unsettled Bets</h1>\`;
+
+      Object.values(grouped).forEach(g => {
+        const uaeTime = new Date(new Date(g.time).getTime() + 4 * 3600000)
+          .toLocaleString('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false });
+        const total = g.bets.reduce((s, b) => s + b.points, 0);
+        html += \`<div class="match">
+          <h2>\${g.match}</h2>
+          <p>\${g.stage} · \${uaeTime} UAE</p>
+          <p class="total">Total points at stake: \${total}</p>
+          <table><tr><th>User</th><th>Pick</th><th>Points</th></tr>\`;
+        g.bets.forEach(b => {
+          html += \`<tr><td>\${b.user}</td><td>\${b.pick}</td><td>\${b.points}</td></tr>\`;
+        });
+        html += \`</table></div>\`;
+      });
+
+      html += \`</body></html>\`;
+      res.send(html);
+    }
+  );
+});
+
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Football Points League running on http://localhost:${PORT}`);
 });
