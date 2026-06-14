@@ -347,7 +347,7 @@ async function autoSettleMatches() {
   try {
     // Get all unsettled matches from DB
     db.all(
-      "SELECT * FROM matches WHERE status != 'settled' AND match_time < NOW() - INTERVAL '115 minutes'",
+      "SELECT * FROM matches WHERE status != 'settled' AND match_time::timestamptz < NOW() - INTERVAL '115 minutes'",
       [],
       async (err, pendingMatches) => {
         if (err || !pendingMatches || pendingMatches.length === 0) return;
